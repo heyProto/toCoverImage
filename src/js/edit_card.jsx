@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import Image from './card.jsx';
+import CoverImage from './card.jsx';
 import JSONSchemaForm from '../../lib/js/react-jsonschema-form';
 
 export default class EditCard extends React.Component {
@@ -226,7 +226,7 @@ export default class EditCard extends React.Component {
                   </div>
                 </div>
                 <div style={{width: 'fit-content', margin: '0 auto'}}>
-                  <Image
+                  <CoverImage
                     mode={this.state.mode}
                     dataJSON={this.state.dataJSON}
                     schemaJSON={this.state.schemaJSON}

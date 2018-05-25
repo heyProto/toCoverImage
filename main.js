@@ -6,19 +6,19 @@ window.ProtoGraph = window.ProtoGraph || {};
 window.ProtoGraph.Card = window.ProtoGraph.Card || {};
 
 
-ProtoGraph.Card.toImage = function () {
+ProtoGraph.Card.toCoverImage = function () {
   this.cardType = 'Image';
 }
 
-ProtoGraph.Card.toImage.prototype.init = function (options) {
+ProtoGraph.Card.toCoverImage.prototype.init = function (options) {
   this.options = options;
 }
 
-ProtoGraph.Card.toImage.prototype.getData = function (data) {
+ProtoGraph.Card.toCoverImage.prototype.getData = function (data) {
   return this.containerInstance.exportData();
 }
 
-ProtoGraph.Card.toImage.prototype.renderCol4 = function (data) {
+ProtoGraph.Card.toCoverImage.prototype.renderCol4 = function (data) {
   this.mode = 'col4';
   ReactDOM.render(
     <Card
@@ -33,30 +33,30 @@ ProtoGraph.Card.toImage.prototype.renderCol4 = function (data) {
     this.options.selector);
 }
 
-ProtoGraph.Card.toImage.prototype.renderCol2 = function (data) {
+ProtoGraph.Card.toCoverImage.prototype.renderCol2 = function (data) {
   this.mode = 'col2';
   this.render();
 }
 
-ProtoGraph.Card.toImage.prototype.renderCol3 = function (data) {
+ProtoGraph.Card.toCoverImage.prototype.renderCol3 = function (data) {
   this.mode = 'col3';
   this.render();
 }
 
-ProtoGraph.Card.toImage.prototype.renderCol4 = function (data) {
+ProtoGraph.Card.toCoverImage.prototype.renderCol4 = function (data) {
   this.mode = 'col4';
   this.render();
 }
 
-ProtoGraph.Card.toImage.prototype.renderCol7 = function (data) {
+ProtoGraph.Card.toCoverImage.prototype.renderCol7 = function (data) {
   this.mode = 'col7';
   this.render();
 }
-ProtoGraph.Card.toImage.prototype.renderCol16 = function (data) {
+ProtoGraph.Card.toCoverImage.prototype.renderCol16 = function (data) {
   this.mode = 'col16';
   this.render();
 }
-ProtoGraph.Card.toImage.prototype.render = function (data) {
+ProtoGraph.Card.toCoverImage.prototype.render = function (data) {
   ReactDOM.render(
     <Card
       dataURL={this.options.data_url}

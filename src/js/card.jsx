@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-export default class toImage extends React.Component {
+export default class toCoverImage extends React.Component {
   constructor(props) {
     super(props)
 
@@ -28,7 +28,7 @@ export default class toImage extends React.Component {
   }
 
   exportData() {
-    return document.getElementById('protograph-div').getBoundingClientRect();
+    return this.props.selector.getBoundingClientRect();
   }
 
   componentDidMount() {
