@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset = "UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Name</title>
+    <link rel="stylesheet" type="text/css" href="https://dwln9tzsi7g07.cloudfront.net/Assets/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="card.min.css">
+
+  </head>
+  <body>
+    <div id="card-name-div"></div></br>
+    <script src = "card.min.js"></script>
+    <script type="text/javascript">
+    var x = new ProtoGraph.Card.toCardName();
+
+    function findGetParameter(parameterName) {
+        var result = null,
+            tmp = [],
+            search_url = decodeURIComponent(location.search);
+
+        search_url
+            .substr(1)
+            .split("&")
+            .forEach(function (item) {
+              tmp = item.split("=");
+              if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+            });
+        return result;
+    }
+
+    let mode = findGetParameter('mode'),
+        readMoreEnabled=false;
+
+      x.init({
+        selector: document.querySelector('#card-name-div'),
+        data_url: "./dist/0.0.1/data.json",
+        schema_url: "./dist/0.0.1/schema.json",
+        configuration_url: "./dist/0.0.1/view_cast.json",
+        configuration_schema_url: './dist/0.0.1/configuration_schema.json',
+        onClickCallback: function () {
+          let h = x.getData().height;
+          that.send('resize_frame', {width: '100%', height: h})
+        }
+      })
+      renderWithMode(mode,readMoreEnabled);
+
+    function renderWithMode(mode) {
+      switch(mode){
+        case "laptop":
+          x.renderLaptop();
+          break;
+        case "mobile":
+        default:
+          x.renderMobile();
+          break;
+      }
+    }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "id": "http://example.com/example.json",
+  "properties": {
+    "data": {
+      "properties": {
+        "title":{
+          "type": "string",
+          "title": "Title"
+        },
+        "url_16column": {
+          "type": "string",
+          "title": "Col-16 Image URL",
+          "default": "https://protograph-staging.pykih.com/accounts/6/images/64"
+        },
+        "url_7column": {
+          "type": "string",
+          "title": "Col-7 Image URL"
+        },
+        "credit": {
+          "type": "string",
+          "title": "Type caption for image"
+        },
+        "credit_link": {
+          "type": "string",
+          "title": "On click of caption, link out to URL",
+          "pattern": "((?:https?\\:\/\/|www\\.)(?:[-a-z0-9]+\\.)*[-a-z0-9]+.*)"
+        },
+        "tab": {
+          "type": "boolean",
+          "title": "Open in new tab"
+        },
+        "link":{
+          "type":"string",
+          "title":"On click of image, link out to URL",
+          "pattern": "((?:https?\\:\/\/|www\\.)(?:[-a-z0-9]+\\.)*[-a-z0-9]+.*)"
+        }
+      },
+      "type": "object",
+      "required": [
+        "title","url_16column"
+      ]
+    },
+    "mandatory_config": {
+    }
+  },
+  "required": [
+    "mandatory_config",
+    "data"
+  ],
+  "type": "object"
+}
