@@ -18,6 +18,18 @@
           "type": "string",
           "title": "Col-7 Image URL"
         },
+        "url_4column": {
+          "type": "string",
+          "title": "Col-4 Image URL"
+        },
+        "url_3column": {
+          "type": "string",
+          "title": "Col-3 Image URL"
+        },
+        "url_2column": {
+          "type": "string",
+          "title": "Col-2 Image URL"
+        },
         "credit": {
           "type": "string",
           "title": "Type caption for image"

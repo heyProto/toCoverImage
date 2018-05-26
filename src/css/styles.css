@@ -127,6 +127,42 @@ body{
   max-width: 100%;
   height: auto;
 }
+.focus-area-col16{
+  width:140px;
+  height: 250px;
+  background:rgba(255,255, 255, 0.5);
+  border:solid;
+  z-index: 1;
+  position: absolute;
+  transform: translate(560px,90px);
+}
+.focus-area-col7{
+  width:140px;
+  height: 250px;
+  background:rgba(255,255, 255, 0.5);
+  border:solid;
+  z-index: 1;
+  position: absolute;
+  transform: translate(200px);
+}
+.focus-area-col4{
+  width:140px;
+  height: 250px;
+  background:rgba(255,255, 255, 0.5);
+  border:solid;
+  z-index: 1;
+  position: absolute;
+  transform: translate(80px);
+}
+.focus-area-col3{
+  width:140px;
+  height: 250px;
+  background:rgba(255,255, 255, 0.5);
+  border:solid;
+  z-index: 1;
+  position: absolute;
+  transform: translate(40px);
+}
 @media only screen and (max-width: 500px) {
   .protograph-card.col4 {
     margin-left: auto;
