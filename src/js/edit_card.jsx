@@ -92,7 +92,7 @@ export default class EditCard extends React.Component {
 
   renderSEO() {
     //This function should return all the textual content of the card (no images, videos) inside blockquote tag. The content should be inside h3 and p tags only.
-    let seo_blockquote = `<blockquote><h3>${this.state.dataJSON.data.title}</h3><p>${this.state.dataJSON.data.description}</p></blockquote>`
+    let seo_blockquote = `<blockquote><h3>${this.state.dataJSON.data.title}</h3></blockquote>`
     return seo_blockquote;
   }
 
