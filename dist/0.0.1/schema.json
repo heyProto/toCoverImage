@@ -53,8 +53,6 @@
       "required": [
         "title","url_16column"
       ]
-    },
-    "mandatory_config": {
     }
   },
   "required": [
