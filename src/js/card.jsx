@@ -180,7 +180,7 @@ export default class toCoverImage extends React.Component {
     }
     return (
        <div className="protograph-toImage-image-container">
-         <div className={this.getfocus(this.props.mode)}>Area of focus</div>
+         {/* <div className={this.getfocus(this.props.mode)}>Area of focus</div> */}
          <img src={image} alt={data.title} style={style} className='protograph-toImage-image' />
            
        </div>
