@@ -179,7 +179,7 @@ export default class EditCard extends React.Component {
                 <div>
                   <div className="section-title-text">Fill the form</div>
                   <div className="ui label proto-pull-right">
-                    toImage
+                    toRenderEdit
                   </div>
                 </div>
                 <JSONSchemaForm schema={this.renderSchemaJSON()}
