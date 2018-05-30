@@ -49,11 +49,11 @@
           "pattern": "((?:https?\\:\/\/|www\\.)(?:[-a-z0-9]+\\.)*[-a-z0-9]+.*)|^\\d*$"
         },
         "left":{
-          "type":"string",
+          "type":"number",
           "title":"Left(in %)"
         },
         "top":{
-          "type":"string",
+          "type":"number",
           "title":"Top(in %)"
         }
       },

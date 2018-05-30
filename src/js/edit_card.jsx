@@ -110,8 +110,7 @@ export default class EditCard extends React.Component {
     //Fills the form with sample data
     switch(this.state.step) {
       case 1:
-        let data = this.state.dataJSON.data;
-        return data;
+        return this.state.dataJSON.data;
         break;
     }
   }
