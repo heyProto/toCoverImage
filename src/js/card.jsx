@@ -150,7 +150,7 @@ export default class toCoverImage extends React.Component {
       image = url16;
     }
 
-    // style.width = this.state.width;
+    style.width = this.state.width;
     style.height = this.state.height;
     console.log("Initially", style);
     img.onload = (responseImage)=>{
