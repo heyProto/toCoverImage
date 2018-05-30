@@ -49,7 +49,7 @@ export default class EditCard extends React.Component {
             schemaJSON: schema.data,
             optionalConfigJSON: opt_config.data,
             optionalConfigSchemaJSON: opt_config_schema.data,
-            uiSchemaJSON: uiSchema.data
+            uiSchemaJSON: uiSchema.data.data
           });
         }))
         .catch((error) => {
@@ -92,7 +92,7 @@ export default class EditCard extends React.Component {
 
   renderSEO() {
     //This function should return all the textual content of the card (no images, videos) inside blockquote tag. The content should be inside h3 and p tags only.
-    
+
     let seo_blockquote = `<blockquote><h3>${this.state.dataJSON.data.title}</h3></blockquote>`;
     return seo_blockquote;
   }
