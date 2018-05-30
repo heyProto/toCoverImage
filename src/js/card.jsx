@@ -159,7 +159,6 @@ export default class toCoverImage extends React.Component {
       height = img.height;
       width = img.width;
 
-
       let cont = document.getElementsByClassName('protograph-card')[0],
         card = cont.getBoundingClientRect(),
         rwidth = width;
