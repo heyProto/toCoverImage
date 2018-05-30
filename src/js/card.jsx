@@ -127,6 +127,8 @@ export default class toCoverImage extends React.Component {
       url4 = data.url_4column,
       url3 = data.url_3column,
       url2 = data.url_2column,
+      left = data.left,
+      top = data.top,
       style = {},
       image,
       height,
@@ -188,6 +190,9 @@ export default class toCoverImage extends React.Component {
     if(this.props.mode!=="col16"){
       style.height = "250px";
     }
+    style.left = left+"%";
+    style.top = top+"%";
+    style.transform = `translate(-${left}%,-${top}%)`; 
     return (
        <div className="protograph-toImage-image-container">
          {/* <div className={this.getfocus(this.props.mode)}>Area of focus</div> */}

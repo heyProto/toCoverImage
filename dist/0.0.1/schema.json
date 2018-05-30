@@ -47,6 +47,14 @@
           "type":"string",
           "title":"On click of image, link out to URL",
           "pattern": "((?:https?\\:\/\/|www\\.)(?:[-a-z0-9]+\\.)*[-a-z0-9]+.*)|^\\d*$"
+        },
+        "left":{
+          "type":"string",
+          "title":"Left(in %)"
+        },
+        "top":{
+          "type":"string",
+          "title":"Top(in %)"
         }
       },
       "type": "object",

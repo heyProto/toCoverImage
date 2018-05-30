@@ -27,8 +27,6 @@ body{
 }
 .protograph-toImage-image{
   position: absolute;
-  left: 50%;
-  top: 50%;
   transform: translate(-50%,-50%);
 }
 .protograph-toImage-image-description {
