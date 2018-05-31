@@ -192,6 +192,22 @@ export default class toCoverImage extends React.Component {
     if(this.props.mode!=="col16"){
       style.height = "250px";
     }
+    if(this.props.mode == 'col7'){
+      if(img.width < 540){
+        style.width = "540px";
+      }
+    }
+    if(this.props.mode == 'col4'){
+      if(img.width < 300){
+        style.width = "300px";
+      }
+    }
+    if(this.props.mode == 'col3'){
+      if(img.width < 220){
+        style.width = "220px";
+      }
+    }
+
     style.left = left+"%";
     style.top = top+"%";
     style.transform = `translate(-${left}%,-${top}%)`; 

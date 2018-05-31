@@ -226,7 +226,7 @@ export default class EditCard extends React.Component {
                     </a>
                   </div>
                 </div>
-                <div style={{width: 'fit-content', margin: '0 auto'}}>
+                <div style={{width: 'fit-content', margin: 'auto'}}>
                   <CoverImage
                     mode={this.state.mode}
                     dataJSON={this.state.dataJSON}
