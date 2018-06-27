@@ -1,47 +1,35 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset = "UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>toCoverImage</title>
-    <!-- <link rel="stylesheet" type="text/css" href="https://dwln9tzsi7g07.cloudfront.net/Assets/semantic.min.css"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="lib/css/semantic-pykih-theme.css"> -->
-    <link rel="stylesheet" type="text/css" href="src/css/styles.css">
-</head>
-
-<body>
+    <title>Card</title>
+    <link rel="stylesheet" type="text/css" href="https://dwln9tzsi7g07.cloudfront.net/Assets/semantic.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Sarala" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./src/css/styles.css">
+  </head>
+  <body>
     <style>
-        /* #card_div {
-        width: 640px;
+      .test-card {
+        margin: 10px 20px;
       }
-      @media only screen and (max-width: 500px) {
-        #card_div {
-          width: 320px;
-        }
-      } */
     </style>
-    <div id="card_div"></div>
-    <script src="dist/0.0.1/card.min.js"></script>
+
+    <div id="card" class="test-card"></div>
+
+    <script src = "./dist/0.0.1/card.min.js"></script>
     <script type="text/javascript">
-        var x = new ProtoGraph.Card.toCoverImage();
-        x.init({
-            selector: document.querySelector('#card_div'),
-            data_url: "dist/0.0.1/sample.json",
-            // configuration_url: "dist/0.0.1/configuration_sample.json",
-            site_config_url: './dist/0.0.1/site.json'
-        })
+      var x = new ProtoGraph.Card.toCoverImage();
+      x.init({
+        selector: document.querySelector('#card'),
+        data_url: "dist/0.0.1/sample.json",
+        configuration_url: "./dist/0.0.1/configuration_sample.json",
+        site_config_url: './dist/0.0.1/site.json'
+      });
 
-        if (window.innerWidth <= 500) {
-            x.renderCol4();
-        } else {
-            //x.renderCol4();
-            x.renderCol16();
-            //x.renderCol7();
-            // x.renderCol3();
-            // x.renderCol2();
-        }
+      x.render();
+      // x.renderCol4();
+      // x.renderCol7();
     </script>
-</body>
-
+  </body>
 </html>

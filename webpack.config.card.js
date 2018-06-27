@@ -1,6 +1,5 @@
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const minifier = require('minifier')
+const minifier = require('minifier');
 const input = './src/css/styles.css'
 const options = {
   output: "./dist/0.0.1/card.min.css"
@@ -23,11 +22,8 @@ module.exports = {
       }
     }),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new ExtractTextPlugin({
-      filename: 'card.min.css'
-    })
+    new webpack.optimize.UglifyJsPlugin({ output: { comments: false } }),
+    new webpack.optimize.AggressiveMergingPlugin()
   ],
   node: {
     net: 'empty',

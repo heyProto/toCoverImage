@@ -1,231 +1,218 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { all as axiosAll, get as axiosGet, spread as axiosSpread } from 'axios';
-import CoverImage from './card.jsx';
+import Card from './card.jsx';
 import JSONSchemaForm from '../../lib/js/react-jsonschema-form';
 
-export default class EditCard extends React.Component {
+export default class editCard extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      step: 1,
+      // step: 1,
       dataJSON: {},
-      mode: "col16",
       publishing: false,
       schemaJSON: undefined,
-      uiSchemaJSON: {},
-      errorOnFetchingData: undefined,
+      fetchingData: true,
+      uiSchemaJSON: {}
     }
-    this.toggleMode = this.toggleMode.bind(this);
   }
 
   exportData() {
     let getDataObj = {
-      step: this.state.step,
+      // step: this.state.step,
       dataJSON: this.state.dataJSON,
       schemaJSON: this.state.schemaJSON,
+      optionalConfigJSON: this.state.optionalConfigJSON,
+      optionalConfigSchemaJSON: this.state.optionalConfigSchemaJSON
     }
-    getDataObj["name"] = getDataObj.dataJSON.data.title.substr(0,225); // Reduces the name to ensure the slug does not get too long, used for the title of the show page after publishing
+    getDataObj["name"] = getDataObj.dataJSON.data.title.substr(0,225); // Reduces the name to ensure the slug does not get too long
     return getDataObj;
   }
 
   componentDidMount() {
-    // get sample json data based on type i.e string or object
-    if (typeof this.props.dataURL === "string"){
+    // get sample json data based on type i.e string or object.
+    if (this.state.fetchingData){
       axiosAll([
         axiosGet(this.props.dataURL),
         axiosGet(this.props.schemaURL),
-        axiosGet(this.props.siteConfigURL),
         axiosGet(this.props.uiSchemaURL)
-      ]).then(
-        axiosSpread((card, schema, site_config, uiSchema) => {
-          this.setState({
-            dataJSON: card.data,
-            schemaJSON: schema.data,
-            siteConfigs: site_config.data,
-            uiSchemaJSON: uiSchema.data.data
-          });
-        }))
-        .catch((error) => {
-          this.setState({
-            errorOnFetchingData: true
-          })
-        });
+      ])
+        .then(axiosSpread((card, schema, uiSchema) => {
+        let stateVars = {
+          fetchingData: false,
+          dataJSON: card.data,
+          schemaJSON: schema.data,
+          uiSchemaJSON: uiSchema.data
+        };
+
+        this.setState(stateVars);
+      }));
     }
   }
 
   onChangeHandler({formData}) {
-    //Change the data of the form based on current step and previous data
-    switch (this.state.step) {
-      case 1:
+    // switch (this.state.step) {
+    //   case 1:
+    //     console.log(formData)
         this.setState((prevStep, prop) => {
+          // Manipulate dataJSON
           let dataJSON = prevStep.dataJSON;
-          dataJSON.data = formData
+          dataJSON.data = formData;
           return {
             dataJSON: dataJSON
           }
         })
-        break;
-    }
+    //     break;
+    //   case 2:
+    //     this.setState((prevState, prop) => {
+    //       // Manipulate dataJSON
+    //       return {
+    //         dataJSON: dataJSON
+    //       }
+    //     })
+    //     break;
+    // }
   }
 
   onSubmitHandler({formData}) {
-    //Logic to execute on submit of form based on the current step
-    switch(this.state.step) {
-      case 1:
+    // switch(this.state.step) {
+    //   case 1:
+    //     this.setState({ step: 2 });
+    //     break;
+    //   case 2:
         if (typeof this.props.onPublishCallback === "function") {
-          this.setState({ publishing: true });
+          let dataJSON = this.state.dataJSON;
+          dataJSON.data.section = dataJSON.data.title;
+          this.setState({ publishing: true, dataJSON: dataJSON });
           let publishCallback = this.props.onPublishCallback();
           publishCallback.then((message) => {
             this.setState({ publishing: false });
           });
         }
-        break;
-    }
+    //     break;
+    // }
   }
 
-  renderSEO() {
-    //This function should return all the textual content of the card (no images, videos) inside blockquote tag. The content should be inside h3 and p tags only.
 
-    let seo_blockquote = `<blockquote><h3>${this.state.dataJSON.data.title}</h3></blockquote>`;
+  renderSEO() {
+    let d = this.state.dataJSON.data;
+
+    let blockquote_string = `<h1>${d.title}</h1>`;
+    // Create blockqoute string.
+    let seo_blockquote = '<blockquote>' + blockquote_string + '</blockquote>'
     return seo_blockquote;
   }
 
   renderSchemaJSON() {
-    //The changes between form schemas for different steps are made here
-    switch(this.state.step){
-      case 1:
+    let schema;
+    // switch(this.state.step){
+    //   case 1:
         return this.state.schemaJSON.properties.data;
-        break;
-    }
+        // break;
+      // Add more schemas...
+    // }
   }
 
   renderFormData() {
-    //Fills the form with sample data
-    switch(this.state.step) {
-      case 1:
+    // switch(this.state.step) {
+    //   case 1:
         return this.state.dataJSON.data;
-        break;
-    }
+    //     break;
+    //   // Other form data.
+    // }
   }
 
   showLinkText() {
-    return '';
+    // switch(this.state.step) {
+      // case 1:
+        return '';
+        // break;
+    //   case 2:
+    //     return '< Back';
+    //     break;
+    // }
   }
 
   showButtonText() {
-    switch(this.state.step) {
-      case 1:
+    // switch(this.state.step) {
+    //   case 1:
+    //     return 'Next';
+    //     break;
+    //   case 2:
         return 'Publish';
-        break;
-    }
+    //     break;
+    // }
   }
 
-  onPrevHandler() {
-    let prev_step = --this.state.step;
-    this.setState({
-      step: prev_step
-    });
+  getUISchemaJSON() {
+    // switch (this.state.step) {
+    //   case 1:
+        return this.state.uiSchemaJSON;
+        // break;
+    //   default:
+    //     return {};
+    //     break;
+    // }
   }
 
-  toggleMode(e) {
-    //Switch between moving laptop and mobile modes while editing
-    let element = e.target.closest('a'),
-      mode = element.getAttribute('data-mode');
-    this.setState((prevState, props) => {
-      let newMode;
-      if (mode !== prevState.mode) {
-        newMode = mode;
-      } else {
-        newMode = prevState.mode
-      }
-
-      return {
-        mode: newMode
-      }
-    })
-  }
+  // onPrevHandler() {
+  //   let prev_step = --this.state.step;
+  //   this.setState({
+  //     step: prev_step
+  //   });
+  // }
 
   render() {
-    if (this.state.schemaJSON === undefined) {
-      return(
-        <div className="protograph-loader-container">
-          {
-            !this.state.errorOnFetchingData ?
-              "Loading"
-            :
-              <div className="ui basic message">
-                <div className="header">
-                  Failed to load resources
-                </div>
-                <p>Try clearing your browser cache and refresh the page.</p>
-              </div>
-          }
-        </div>
-      )
+    if (this.state.fetchingData) {
+      return(<div>Loading</div>)
     } else {
-      var size = this.state.mode === 'col7' ? 640 : 320;
       return (
         <div className="proto-container">
           <div className="ui grid form-layout">
             <div className="row">
-              <div className="four wide column proto-card-form">
+              <div className="four wide column proto-card-form protograph-scroll-form">
                 <div>
                   <div className="section-title-text">Fill the form</div>
                   <div className="ui label proto-pull-right">
-                    toRenderEdit
+                    ToCoverImage
                   </div>
                 </div>
                 <JSONSchemaForm schema={this.renderSchemaJSON()}
                   onSubmit={((e) => this.onSubmitHandler(e))}
                   onChange={((e) => this.onChangeHandler(e))}
-                  uiSchema={this.state.uiSchemaJSON}
+                  uiSchema={this.getUISchemaJSON()}
                   formData={this.renderFormData()}>
+                  <br/>
                   <a id="protograph-prev-link" className={`${this.state.publishing ? 'protograph-disable' : ''}`} onClick={((e) => this.onPrevHandler(e))}>{this.showLinkText()} </a>
                   <button type="submit" className={`${this.state.publishing ? 'ui primary loading disabled button' : ''} default-button protograph-primary-button`}>{this.showButtonText()}</button>
                 </JSONSchemaForm>
               </div>
               <div className="twelve wide column proto-card-preview proto-share-card-div">
                 <div className="protograph-menu-container">
-                  <div className="ui compact menu">
-                    <a className={`item ${this.state.mode === 'col16' ? 'active' : ''}`}
-                      data-mode='col16'
-                      onClick={(e) => this.toggleMode(e)}
-                    >
-                      col-16
-                    </a>
+                  {/* <div className="ui compact menu">
                     <a className={`item ${this.state.mode === 'col7' ? 'active' : ''}`}
                       data-mode='col7'
-                      onClick={(e) => this.toggleMode(e)}
+                      onClick={this.toggleMode}
                     >
                       col-7
                     </a>
                     <a className={`item ${this.state.mode === 'col4' ? 'active' : ''}`}
                       data-mode='col4'
-                      onClick={(e) => this.toggleMode(e)}
+                      onClick={this.toggleMode}
                     >
                       col-4
                     </a>
                     <a className={`item ${this.state.mode === 'col3' ? 'active' : ''}`}
                       data-mode='col3'
-                      onClick={(e) => this.toggleMode(e)}
+                      onClick={this.toggleMode}
                     >
                       col-3
                     </a>
-                    <a className={`item ${this.state.mode === 'col2' ? 'active' : ''}`}
-                      data-mode='col2'
-                      onClick={(e) => this.toggleMode(e)}
-                    >
-                      col-2
-                    </a>
-                  </div>
+                  </div> */}
                 </div>
-                <div style={{width: 'fit-content', margin: '0 auto'}}>
-                  <CoverImage
-                    mode={this.state.mode}
+                <div className="protograph-app-holder">
+                  <Card
+                    // mode={this.state.mode}
                     dataJSON={this.state.dataJSON}
-                    schemaJSON={this.state.schemaJSON}
-                    siteConfigs={this.state.siteConfigs}
                   />
                 </div>
               </div>

@@ -1,10 +1,1 @@
-{
-  "data": {
-    "left": {
-      "ui:widget": "updown"
-    },
-    "top": {
-      "ui:widget": "updown"
-    }
-  }
-}
+{}

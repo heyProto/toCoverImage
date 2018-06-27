@@ -1,271 +1,138 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { all as axiosAll, get as axiosGet, spread as axiosSpread } from 'axios';
 
-export default class toCoverImage extends React.Component {
+export default class toCard extends React.Component {
+
   constructor(props) {
     super(props)
-
     let stateVar = {
       fetchingData: true,
-      dataJSON: undefined,
+      dataJSON: {},
+      languageTexts: undefined,
+      siteConfigs: this.props.siteConfigs
     };
+
     if (this.props.dataJSON) {
       stateVar.fetchingData = false;
       stateVar.dataJSON = this.props.dataJSON;
+      stateVar.languageTexts = this.getLanguageTexts(this.props.dataJSON.data.language);
     }
 
-    
-
-    if (this.props.siteConfigs) {
-      stateVar.siteConfigs = this.props.siteConfigs;
-    }
-
-    this.handleClick = this.handleClick.bind(this);
     this.state = stateVar;
   }
 
   exportData() {
-    return this.props.selector.getBoundingClientRect();
-  }
-
-  handleClick() {
-    if (this.state.dataJSON.data.tab) {
-      var win = window.open(this.state.dataJSON.data.link, '_blank');
-      win.focus();
-    } else {
-      window.open(this.state.dataJSON.data.link, '_top');
-    }
+    return document.getElementById('protograph_div').getBoundingClientRect();
   }
 
   componentDidMount() {
-    // get sample json data based on type i.e string or object
-    if (this.state.fetchingData){
+    let img = new Image();
+    let height,width;
+    if (this.state.fetchingData) {
       let items_to_fetch = [
         axiosGet(this.props.dataURL)
       ];
+
       if (this.props.siteConfigURL) {
         items_to_fetch.push(axiosGet(this.props.siteConfigURL));
       }
-      axiosAll(items_to_fetch).then(
-        axiosSpread((card, site_configs) => {
-          let stateVar = {
-            fetchingData: false,
-            dataJSON: card.data,
-            siteConfigs: site_configs ? site_configs.data : this.state.siteConfigs
-          };
-          this.setState(stateVar);
-        })
-      );
-    }else{
+
+      axiosAll(items_to_fetch).then(axiosSpread((card, site_configs) => {
+        let stateVar = {
+          fetchingData: false,
+          dataJSON: card.data,
+          optionalConfigJSON:{},
+          siteConfigs: site_configs ? site_configs.data : this.state.siteConfigs
+        };
+        
+        stateVar.dataJSON.data.language = stateVar.siteConfigs.primary_language.toLowerCase();
+        stateVar.languageTexts = this.getLanguageTexts(stateVar.dataJSON.data.language);
+        this.setState(stateVar);
+        img.onload = (image) =>{
+          height = image.path[0].height;
+          width = image.path[0].width;
+          console.log(height,width)
+          this.setState({imgHeight:height,imgWidth:width})
+        }
+        img.src = stateVar.dataJSON.data.img_url
+        console.log(img)
+      }));
+
+      
+      
+    } else {
       this.componentDidUpdate();
     }
   }
 
-  componentWillReceiveProps(){
-    //Manipulation of form data to change what is shown in the card can be done here
-    this.setState({
-      imageRendered: false
-    })
-  }
-
-  componentWillMount(){
-    //Changes before rendering can be made here
-  }
-
-  parseQuery (queryString) {
-    var query = {};
-    var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
-    for (var i = 0; i < pairs.length; i++) {
-        var pair = pairs[i].split('=');
-        query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.dataJSON) {
+      this.setState({
+        dataJSON: nextProps.dataJSON
+      });
     }
-    return query;
   }
 
-  parseUrl(url) {
-    var parser = document.createElement('a'),
-      search;
-    parser.href = url;
-    search = this.parseQuery(parser.search);
-    return {
-      protocol: parser.protocol, // => "http:"
-      host: parser.host,     // => "example.com:3000"
-      hostnam: parser.hostname, // => "example.com"
-      port: parser.port,     // => "3000"
-      pathname: parser.pathname, // => "/pathname/"
-      hash: parser.hash,     // => "#hash"
-      searchString: parser.search,
-      search: search,   // => "?search=test"
-      origin: parser.origin   // => "http://example.com:3000"
-    };
-  }
+  getLanguageTexts(languageConfig) {
+    let language = languageConfig ? languageConfig : "hindi",
+      text_obj;
 
-  getfocus(mode){
-    switch(mode){
-      case "col16":
-        return "focus-area-col16";
-      case "col7":
-        return "focus-area-col7";
-      case "col4":
-        return "focus-area-col4";
-      case "col3":
-        return "focus-area-col3";
+    switch(language.toLowerCase()) {
+      case "hindi":
+        text_obj = {
+          font: "'Sarala', sans-serif"
+        }
+        break;
       default:
-        return "";
+        text_obj = {
+          font: undefined
+        }
+        break;
     }
+
+    return text_obj;
   }
 
-  renderImage() {
-    let data = this.state.dataJSON.data,
-      url16 = data.url_16column,
-      url7 = data.url_7column,
-      url4 = data.url_4column,
-      url3 = data.url_3column,
-      url2 = data.url_2column,
-      left = data.left || 50,
-      top = data.top || 50,
-      transX,
-      transY,
-      style = {},
-      image,
-      height,
-      width,
-      aspect_ratio,
-      img = new Image();
-    if(url2 && (this.props.mode !='col16' && this.props.mode !='col7' && this.props.mode !="col4" && this.props.mode != 'col3') ){
-      image = url2;
-    }
-    else if(url3 && (this.props.mode !='col16' && this.props.mode !='col7' && this.props.mode !="col4") ){
-      image = url3;
-    }
-    else if(url4 && (this.props.mode !='col16' && this.props.mode !='col7') ){
-      image = url4;
-    }
-    else if(url7 && this.props.mode != 'col16'){
-      image = url7;
-    }else{
-      image = url16;
-    }
+  // renderFixed(img_url){
+  //  console.log(img_url) 
+  //  return(
+  //     <div className="toimage-card-fixed">
+  //       <img className="blur-image-bg" src={img_url}/>
+  //       <img src={img_url} width="100%"/>
+  //     </div>
+  //  ) 
+  // }
+
+  // renderFluid(img_url){
+  //   // console.log(img_url)
+  //   return(
+  //       <img src={img_url} width="100%"/>
+  //   )
     
-    if(this.props.mode == 'col16'){
-      style.width = this.state.width;
-    }
-
-    style.height = this.state.height;
-    console.log("Initially", style);
-    img.onload = (responseImage)=>{
-
-      height = img.height;
-      width = img.width;
-
-      let cont = document.getElementsByClassName('protograph-card')[0],
-        card = cont.getBoundingClientRect(),
-        rwidth = width;
-        // processedHeight = this.getHeight(responseImage.target.naturalHeight);
-      if(width > card.width){
-        cont.style.height = (this.props.mode == 'col16') ? "430px" : "250px";
-
-
-      }else{
-        cont.style.height = (this.props.mode == 'col16') ? "430px" : "250px";
-
-
-      }
-
-
-      if(!this.state.imageRendered){
-        this.setState({
-          imageRendered: true,
-          width: rwidth,
-          height: height
-        }, e => {
-          if (typeof this.props.resizeIframe === "function") {
-            this.props.resizeIframe();
-          }
-        })
-      }
-    }
-    img.src = image;
-    if(this.props.mode!=="col16"){
-      style.height = "250px";
-    }
-    if(this.props.mode == 'col7'){
-      if(img.width < 540){
-        style.width = "540px";
-      }
-    }
-    if(this.props.mode == 'col4'){
-      if(img.width < 300){
-        style.width = "300px";
-      }
-    }
-    if(this.props.mode == 'col3'){
-      if(img.width < 220){
-        style.width = "220px";
-      }
-    }
-
-
-    style.left = left+"%";
-    style.top = top+"%";
-    transX = ((100 - left) >= 0 && (100 - left) <= 100) ? 100 - left : ((100 - left) < 0)? 0 : 100;
-    transY = ((100 - top) >= 0 && (100 - top) <= 100) ? 100 - top: ((100 - top) < 0)? 0 : 100;
-    style.transform = `translate(-${transX}%,-${transY}%)`;
-    return (
-       <div className="protograph-toImage-image-container">
-         {/* <div className={this.getfocus(this.props.mode)}>Area of focus</div> */}
-         <img src={image} alt={data.title} style={style} className='protograph-toImage-image' />
-
-       </div>
-    );
-  }
-
-  renderCredits() {
-    const data = this.state.dataJSON.data,
-      credit_link = data.credit_link,
-      credit = data.credit;
-
-    if ((credit_link && credit_link.length) && (credit && credit.length)) {
-      return (
-        <div className='proto-toImage-credits proto-toImage-fixed-credits'>
-          {
-            <a href={`${credit_link ? credit_link : '#'}`} target="_blank">
-              {credit}
-            </a>
-          }
-        </div>
-      )
-    } else if (credit && credit.length) {
-      return (
-        <div className='proto-toImage-credits proto-toImage-fixed-credits'>
-          {credit}
-        </div>
-      )
-    } else {
-      return undefined;
-    }
-
-  }
-
-  renderCol() {
-    if (this.state.fetchingData ){
-      return(<div>Loading</div>)
-    } else {
-      const data = this.state.dataJSON.data,
-        style = {};
-      return (
-        <div id="protograph-div" className={`protograph-laptop-mode ${this.props.mode}`} style={style}>
-          <div style={{ padding: 0 }} className={`protograph-card ${this.props.mode}`} style={style}>
-            <div className="protograph-toImage-image-container" onClick={data.link ? this.handleClick : undefined}>{this.renderImage()}</div>
-          </div>
-          {this.renderCredits()}
-        </div>
-      )
-    }
-  }
-
+  // }
+  
   render() {
-    return this.renderCol();
+    /*
+      Code the CARD UI
+      Ensure that you break down the UI into multiple smaller components /functions that can be reused.
+    */
+    // console.log(this.state.dataJSON.data)
+    if (this.state.fetchingData) {
+      return (<div>Loading</div>)
+    } else {
+
+      let img_url = this.state.dataJSON.data.img_url;
+      
+      // let {width,heigth} = this.state.dimensions
+      // console.log(this.state.dimensions)
+      
+      return (
+        <div className="image-card">
+          {/* {is_fixed && <img className="blur-image-bg" src={img_url}/>} */}
+          {(this.state.imgHeight > this.state.imgWidth)?<img src={img_url} height="100%"/>:<img src={img_url} width="100%"/>}
+        </div>
+
+      );
+    }
   }
 }

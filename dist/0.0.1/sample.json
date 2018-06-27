@@ -1,14 +1,6 @@
 {
   "data": {
-    "title":"Cover Image",
-    "url_16column": "https://cdn.protograph.pykih.com/images/JagranNews/2fcd23348b46deef/2358.jpeg",
-    "url_7column": "",
-    "url_4column": "",
-    "url_3column": "",
-    "url_2column": "",
-    "link":"",
-    "tab":false,
-    "left":50,
-    "top":50
-  }
+    "img_url":"https://static1.squarespace.com/static/52ba08abe4b0d9c93d4ed316/t/531c849ae4b069e27c2c7e75/1394377883081/2011-pulitzer-breaking-news-photography-9.jpg"
+  },
+  "mandatory_config": {}
 }

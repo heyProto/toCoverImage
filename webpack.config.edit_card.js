@@ -6,7 +6,7 @@ module.exports = {
     path: './',
     filename: './dist/0.0.1/edit-card.min.js'
   },
-  plugins: [
+  plugin: [
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production')

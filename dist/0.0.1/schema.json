@@ -4,67 +4,16 @@
   "id": "http://example.com/example.json",
   "properties": {
     "data": {
+      "id": "/properties/data",
       "properties": {
-        "title":{
-          "type": "string",
-          "title": "Title"
-        },
-        "url_16column": {
-          "type": "string",
-          "title": "Col-16 Image URL",
-          "default": "https://protograph-staging.pykih.com/accounts/6/images/64"
-        },
-        "url_7column": {
-          "type": "string",
-          "title": "Col-7 Image URL"
-        },
-        "url_4column": {
-          "type": "string",
-          "title": "Col-4 Image URL"
-        },
-        "url_3column": {
-          "type": "string",
-          "title": "Col-3 Image URL"
-        },
-        "url_2column": {
-          "type": "string",
-          "title": "Col-2 Image URL"
-        },
-        "credit": {
-          "type": "string",
-          "title": "Type caption for image"
-        },
-        "credit_link": {
-          "type": "string",
-          "title": "On click of caption, link out to URL",
-          "pattern": "((?:https?\\:\/\/|www\\.)(?:[-a-z0-9]+\\.)*[-a-z0-9]+.*)"
-        },
-        "tab": {
-          "type": "boolean",
-          "title": "Open in new tab"
-        },
-        "link":{
-          "type":"string",
-          "title":"On click of image, link out to URL",
-          "pattern": "((?:https?\\:\/\/|www\\.)(?:[-a-z0-9]+\\.)*[-a-z0-9]+.*)|^\\d*$"
-        },
-        "left":{
-          "type":"number",
-          "title":"Left(in %)"
-        },
-        "top":{
-          "type":"number",
-          "title":"Top(in %)"
+        "img_url":{
+          "id": "/properties/data/properties/image_url",
+          "type":"string"
         }
       },
-      "type": "object",
-      "required": [
-        "title","url_16column"
-      ]
+      "title": "Card Data",
+      "type": "object"
     }
   },
-  "required": [
-    "data"
-  ],
   "type": "object"
 }
