@@ -121,15 +121,15 @@ export default class toCard extends React.Component {
       return (<div>Loading</div>)
     } else {
 
-      let img_url = this.state.dataJSON.data.img_url;
+      let img_url = this.state.dataJSON.data.url_16column;
       
       // let {width,heigth} = this.state.dimensions
       // console.log(this.state.dimensions)
       
       return (
+        
         <div className="image-card">
-          {/* {is_fixed && <img className="blur-image-bg" src={img_url}/>} */}
-          {(this.state.imgHeight > this.state.imgWidth)?<img src={img_url} height="100%"/>:<img src={img_url} width="100%"/>}
+          {<img src={img_url} width="1260px" height="430px"/>}
         </div>
 
       );
