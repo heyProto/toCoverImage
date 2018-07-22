@@ -110,29 +110,95 @@ export default class toCard extends React.Component {
   //   )
     
   // }
-  
-  render() {
-    /*
-      Code the CARD UI
-      Ensure that you break down the UI into multiple smaller components /functions that can be reused.
-    */
-    // console.log(this.state.dataJSON.data)
+  renderSixteenCol() {
     if (this.state.fetchingData) {
-      return (<div>Loading</div>)
+      return (
+        <div></div>
+      )
     } else {
-
-      let img_url = this.state.dataJSON.data.url_16column;
-      
-      // let {width,heigth} = this.state.dimensions
-      // console.log(this.state.dimensions)
+      let data = this.state.dataJSON.data;
       
       return (
-        
-        <div className="image-card">
-          {<img src={img_url} width="1260px" height="430px"/>}
+        <div className="pro-column-16">
+          <div className="pro-rows-5">
+              <div className="image-card">
+                {<img src={data.img_url} width="1260px" height="430px"/>}
+              </div>
+          </div>
         </div>
-
       );
+    }
+  }
+  renderSevenCol() {
+    if (this.state.fetchingData) {
+      return (
+        <div></div>
+      )
+    } else {
+      let data = this.state.dataJSON.data;
+      
+      return (
+        <div className="pro-column-7">
+          <div className="pro-rows-3">
+              <div className="image-card">
+                {<img src={data.img_url} width="1260px" height="430px"/>}
+              </div>
+          </div>
+        </div>
+      );
+    }
+  }
+  renderFourCol() {
+    if (this.state.fetchingData) {
+      return (
+        <div></div>
+      )
+    } else {
+      let data = this.state.dataJSON.data;
+      
+      return (
+        <div className="pro-column-4">
+          <div className="pro-rows-3">
+            <div className="image-card">
+              {<img src={data.img_url} width="1260px" height="430px"/>}
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+  renderTwoCol() {
+    if (this.state.fetchingData) {
+      return (
+        <div></div>
+      )
+    } else {
+      let data = this.state.dataJSON.data;
+      
+      return (
+        <div className="pro-column-2">
+          <div className="pro-rows-3">
+            <div className="image-card">
+              {<img src={data.img_url} width="1260px" height="430px"/>}
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+  
+  render() {
+    switch(this.props.mode) {
+      case 'col16':
+        return this.renderSixteenCol();
+      case 'col7':
+        return this.renderSevenCol();
+      case 'col4':
+        return this.renderFourCol();
+      case 'col2':
+        return this.renderTwoCol();
+      default : 
+        return this.renderSixteenCol();  
     }
   }
 }

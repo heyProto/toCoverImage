@@ -14,6 +14,7 @@ export default class editCard extends React.Component {
       fetchingData: true,
       uiSchemaJSON: {}
     }
+    this.toggleMode = this.toggleMode.bind(this);
   }
 
   exportData() {
@@ -143,6 +144,28 @@ export default class editCard extends React.Component {
     // }
   }
 
+  toggleMode(e) {
+    let element = e.target.closest('a'),
+      mode = element.getAttribute('data-mode');
+    this.setState((prevState, props) => {
+      return {
+        mode: mode
+      }
+    }, (() => {
+          this.setState((prevState, props) => {
+            let newMode;
+            if (mode !== prevState.mode) {
+              newMode = mode;
+            } else {
+              newMode = prevState.mode
+            }
+            return {
+              mode: newMode
+            }
+          })
+        }))
+  }
+
   getUISchemaJSON() {
     // switch (this.state.step) {
     //   case 1:
@@ -188,7 +211,7 @@ export default class editCard extends React.Component {
               </div>
               <div className="twelve wide column proto-card-preview proto-share-card-div">
                 <div className="protograph-menu-container">
-                  {/* <div className="ui compact menu">
+                  <div className="ui compact menu">
                     <a className={`item ${this.state.mode === 'col7' ? 'active' : ''}`}
                       data-mode='col7'
                       onClick={this.toggleMode}
@@ -207,11 +230,11 @@ export default class editCard extends React.Component {
                     >
                       col-3
                     </a>
-                  </div> */}
+                  </div>
                 </div>
                 <div className="protograph-app-holder">
                   <Card
-                    // mode={this.state.mode}
+                    mode={this.state.mode}
                     dataJSON={this.state.dataJSON}
                   />
                 </div>
