@@ -7,9 +7,9 @@
     <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="card.min.css">
   </head>
-  <body style="margin:0px">
-    <div id="toCard_card"></div>
-    <script src="https://dwln9tzsi7g07.cloudfront.net/lib/protograph-core.min.js"></script>
+  <body>
+    <div id="toCard_card" ></div>
+    <script src="https://cdn.protograph.pykih.com/lib/protograph-core.min.js"></script>
     <script src = "card.min.js"></script>
     <script type="text/javascript">
       var x = new ProtoGraph.Card.toCoverImage();
@@ -42,7 +42,7 @@
 
               params = {
                 selector: document.querySelector('#toCard_card'),
-                data_url: data_base_path + "/data.json"
+                data_url: "./sample.json"
               }
 
               if (options && options.headerJSON) {

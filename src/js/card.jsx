@@ -22,7 +22,7 @@ export default class toCard extends React.Component {
   }
 
   exportData() {
-    return document.getElementById('protograph_div').getBoundingClientRect();
+    return this.props.selector.getBoundingClientRect();
   }
 
   componentDidMount() {
@@ -44,7 +44,7 @@ export default class toCard extends React.Component {
           optionalConfigJSON:{},
           siteConfigs: site_configs ? site_configs.data : this.state.siteConfigs
         };
-        
+
         stateVar.dataJSON.data.language = stateVar.siteConfigs.primary_language.toLowerCase();
         stateVar.languageTexts = this.getLanguageTexts(stateVar.dataJSON.data.language);
         this.setState(stateVar);
@@ -58,8 +58,8 @@ export default class toCard extends React.Component {
         console.log(img)
       }));
 
-      
-      
+
+
     } else {
       this.componentDidUpdate();
     }
@@ -94,13 +94,13 @@ export default class toCard extends React.Component {
   }
 
   // renderFixed(img_url){
-  //  console.log(img_url) 
+  //  console.log(img_url)
   //  return(
   //     <div className="toimage-card-fixed">
   //       <img className="blur-image-bg" src={img_url}/>
   //       <img src={img_url} width="100%"/>
   //     </div>
-  //  ) 
+  //  )
   // }
 
   // renderFluid(img_url){
@@ -108,8 +108,22 @@ export default class toCard extends React.Component {
   //   return(
   //       <img src={img_url} width="100%"/>
   //   )
-    
+
   // }
+
+  renderHTML(data) {
+    if (this.state.fetchingData) {
+      return (
+        <div></div>
+      )
+    } else {
+      return(
+        <div className="image-card">
+          {<img src={data.img_url} width="1260px" height="430px"/>}
+        </div>
+      )
+    }
+  }
   renderSixteenCol() {
     if (this.state.fetchingData) {
       return (
@@ -117,13 +131,11 @@ export default class toCard extends React.Component {
       )
     } else {
       let data = this.state.dataJSON.data;
-      
+
       return (
         <div className="pro-column-16">
           <div className="pro-rows-5">
-              <div className="image-card">
-                {<img src={data.img_url} width="1260px" height="430px"/>}
-              </div>
+            {this.renderHTML(data)}
           </div>
         </div>
       );
@@ -136,13 +148,11 @@ export default class toCard extends React.Component {
       )
     } else {
       let data = this.state.dataJSON.data;
-      
+
       return (
         <div className="pro-column-7">
           <div className="pro-rows-3">
-              <div className="image-card">
-                {<img src={data.img_url} width="1260px" height="430px"/>}
-              </div>
+              {this.renderHTML(data)}
           </div>
         </div>
       );
@@ -155,13 +165,11 @@ export default class toCard extends React.Component {
       )
     } else {
       let data = this.state.dataJSON.data;
-      
+
       return (
         <div className="pro-column-4">
           <div className="pro-rows-3">
-            <div className="image-card">
-              {<img src={data.img_url} width="1260px" height="430px"/>}
-            </div>
+            {this.renderHTML(data)}
           </div>
         </div>
       );
@@ -174,19 +182,17 @@ export default class toCard extends React.Component {
       )
     } else {
       let data = this.state.dataJSON.data;
-      
+
       return (
         <div className="pro-column-2">
           <div className="pro-rows-3">
-            <div className="image-card">
-              {<img src={data.img_url} width="1260px" height="430px"/>}
-            </div>
+            {this.renderHTML(data)}
           </div>
         </div>
       );
     }
   }
-  
+
   render() {
     switch(this.props.mode) {
       case 'col16':
@@ -197,8 +203,8 @@ export default class toCard extends React.Component {
         return this.renderFourCol();
       case 'col2':
         return this.renderTwoCol();
-      default : 
-        return this.renderSixteenCol();  
+      default :
+        return this.renderHTML(this.state.dataJSON.data);
     }
   }
 }
