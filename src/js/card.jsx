@@ -119,7 +119,7 @@ export default class toCard extends React.Component {
     } else {
       return(
         <div className="image-card">
-          {<img src={data.img_url} width="1260px" height="430px"/>}
+          {<img src={data.img_url}/>}
         </div>
       )
     }
@@ -133,8 +133,8 @@ export default class toCard extends React.Component {
       let data = this.state.dataJSON.data;
 
       return (
-        <div className="pro-column-16">
-          <div className="pro-rows-5">
+        <div className="pro-col-16">
+          <div className="pro-row-5">
             {this.renderHTML(data)}
           </div>
         </div>
@@ -150,8 +150,8 @@ export default class toCard extends React.Component {
       let data = this.state.dataJSON.data;
 
       return (
-        <div className="pro-column-7">
-          <div className="pro-rows-3">
+        <div className="pro-col-7">
+          <div className="pro-row-3">
               {this.renderHTML(data)}
           </div>
         </div>
@@ -167,8 +167,8 @@ export default class toCard extends React.Component {
       let data = this.state.dataJSON.data;
 
       return (
-        <div className="pro-column-4">
-          <div className="pro-rows-3">
+        <div className="pro-col-4">
+          <div className="pro-row-3">
             {this.renderHTML(data)}
           </div>
         </div>
@@ -184,8 +184,8 @@ export default class toCard extends React.Component {
       let data = this.state.dataJSON.data;
 
       return (
-        <div className="pro-column-2">
-          <div className="pro-rows-3">
+        <div className="pro-col-2">
+          <div className="pro-row-3">
             {this.renderHTML(data)}
           </div>
         </div>
