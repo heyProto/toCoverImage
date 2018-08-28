@@ -20,9 +20,11 @@ global.window = {};
 // }
 
 function render(initialState) {
+    console.log("Cover image Initial state: ", initialState);
     let content = renderToString(
         <Card
             dataJSON={initialState.dataJSON}
+            mode={initialState.mode}
             renderingSSR={true}
         />
     );

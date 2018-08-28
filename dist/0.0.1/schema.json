@@ -6,9 +6,13 @@
     "data": {
       "id": "/properties/data",
       "properties": {
-        "img_url":{
+        "img_url": {
           "id": "/properties/data/properties/image_url",
-          "type":"string"
+          "type": "string"
+        },
+        "mobile_img_url": {
+          "id": "/properties/data/properties/mobile_image_url",
+          "type": "string"
         }
       },
       "title": "Card Data",

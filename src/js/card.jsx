@@ -1,10 +1,9 @@
-import React from 'react';
-import { all as axiosAll, get as axiosGet, spread as axiosSpread } from 'axios';
+import React from "react";
+import { all as axiosAll, get as axiosGet, spread as axiosSpread } from "axios";
 
 export default class toCard extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     let stateVar = {
       fetchingData: true,
       dataJSON: {},
@@ -15,7 +14,9 @@ export default class toCard extends React.Component {
     if (this.props.dataJSON) {
       stateVar.fetchingData = false;
       stateVar.dataJSON = this.props.dataJSON;
-      stateVar.languageTexts = this.getLanguageTexts(this.props.dataJSON.data.language);
+      stateVar.languageTexts = this.getLanguageTexts(
+        this.props.dataJSON.data.language
+      );
     }
 
     this.state = stateVar;
@@ -27,46 +28,47 @@ export default class toCard extends React.Component {
 
   componentDidMount() {
     let img = new Image();
-    let height,width;
+    let height, width;
     if (this.state.fetchingData) {
-      let items_to_fetch = [
-        axiosGet(this.props.dataURL)
-      ];
+      let items_to_fetch = [axiosGet(this.props.dataURL)];
 
       if (this.props.siteConfigURL) {
         items_to_fetch.push(axiosGet(this.props.siteConfigURL));
       }
 
-      axiosAll(items_to_fetch).then(axiosSpread((card, site_configs) => {
-        let stateVar = {
-          fetchingData: false,
-          dataJSON: card.data,
-          optionalConfigJSON:{},
-          siteConfigs: site_configs ? site_configs.data : this.state.siteConfigs
-        };
+      axiosAll(items_to_fetch).then(
+        axiosSpread((card, site_configs) => {
+          let stateVar = {
+            fetchingData: false,
+            dataJSON: card.data,
+            optionalConfigJSON: {},
+            siteConfigs: site_configs
+              ? site_configs.data
+              : this.state.siteConfigs
+          };
 
-        stateVar.dataJSON.data.language = stateVar.siteConfigs.primary_language.toLowerCase();
-        stateVar.languageTexts = this.getLanguageTexts(stateVar.dataJSON.data.language);
-        this.setState(stateVar);
-        img.onload = (image) =>{
-          height = image.path[0].height;
-          width = image.path[0].width;
-          console.log(height,width)
-          this.setState({imgHeight:height,imgWidth:width})
-        }
-        img.src = stateVar.dataJSON.data.img_url
-        console.log(img)
-      }));
-
-
-
+          stateVar.dataJSON.data.language = stateVar.siteConfigs.primary_language.toLowerCase();
+          stateVar.languageTexts = this.getLanguageTexts(
+            stateVar.dataJSON.data.language
+          );
+          this.setState(stateVar);
+          img.onload = image => {
+            height = image.path[0].height;
+            width = image.path[0].width;
+            console.log(height, width);
+            this.setState({ imgHeight: height, imgWidth: width });
+          };
+          img.src = stateVar.dataJSON.data.img_url;
+          console.log(img);
+        })
+      );
     } else {
       this.componentDidUpdate();
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.dataJSON) {
+    if (nextProps.dataJSON) {
       this.setState({
         dataJSON: nextProps.dataJSON
       });
@@ -77,16 +79,16 @@ export default class toCard extends React.Component {
     let language = languageConfig ? languageConfig : "hindi",
       text_obj;
 
-    switch(language.toLowerCase()) {
+    switch (language.toLowerCase()) {
       case "hindi":
         text_obj = {
           font: "'Sarala', sans-serif"
-        }
+        };
         break;
       default:
         text_obj = {
           font: undefined
-        }
+        };
         break;
     }
 
@@ -113,97 +115,77 @@ export default class toCard extends React.Component {
 
   renderHTML(data) {
     if (this.state.fetchingData) {
-      return (
-        <div></div>
-      )
+      return <div />;
     } else {
-      return(
-        <div className="image-card">
-          {<img src={data.img_url}/>}
-        </div>
-      )
+      return <div className="image-card">{<img src={data.img_url} />}</div>;
     }
   }
   renderSixteenCol() {
     if (this.state.fetchingData) {
-      return (
-        <div></div>
-      )
+      return <div />;
     } else {
       let data = this.state.dataJSON.data;
 
       return (
         <div className="pro-col-16">
-          <div className="pro-row-5">
-            {this.renderHTML(data)}
-          </div>
+          <div className="pro-row-5">{this.renderHTML(data)}</div>
         </div>
       );
     }
   }
   renderSevenCol() {
     if (this.state.fetchingData) {
-      return (
-        <div></div>
-      )
+      return <div />;
     } else {
       let data = this.state.dataJSON.data;
 
       return (
         <div className="pro-col-7">
-          <div className="pro-row-3">
-              {this.renderHTML(data)}
-          </div>
+          <div className="pro-row-3">{this.renderHTML(data)}</div>
         </div>
       );
     }
   }
   renderFourCol() {
     if (this.state.fetchingData) {
-      return (
-        <div></div>
-      )
+      return <div />;
     } else {
       let data = this.state.dataJSON.data;
+      data.img_url = data.mobile_img_url;
 
       return (
         <div className="pro-col-4">
-          <div className="pro-row-3">
-            {this.renderHTML(data)}
-          </div>
+          <div className="pro-row-3">{this.renderHTML(data)}</div>
         </div>
       );
     }
   }
   renderTwoCol() {
     if (this.state.fetchingData) {
-      return (
-        <div></div>
-      )
+      return <div />;
     } else {
       let data = this.state.dataJSON.data;
 
       return (
         <div className="pro-col-2">
-          <div className="pro-row-3">
-            {this.renderHTML(data)}
-          </div>
+          <div className="pro-row-3">{this.renderHTML(data)}</div>
         </div>
       );
     }
   }
 
   render() {
-    switch(this.props.mode) {
-      case 'col16':
+    console.log("Cover image mode prop: ", this.props.mode);
+    switch (this.props.mode) {
+      case "col16":
         return this.renderSixteenCol();
-      case 'col7':
+      case "col7":
         return this.renderSevenCol();
-      case 'col4':
+      case "col4":
         return this.renderFourCol();
-      case 'col2':
+      case "col2":
         return this.renderTwoCol();
-      default :
+      default:
         return this.renderHTML(this.state.dataJSON.data);
     }
   }
