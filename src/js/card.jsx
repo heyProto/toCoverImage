@@ -117,7 +117,11 @@ export default class toCard extends React.Component {
     if (this.state.fetchingData) {
       return <div />;
     } else {
-      return <div className="image-card">{<img src={data.img_url} />}</div>;
+    return (
+      <div className="image-card">
+        <img src={this.props.mode === "col4" && data.mobile_img_url ? data.mobile_img_url : data.img_url} />
+      </div>
+    );
     }
   }
   renderSixteenCol() {
@@ -133,25 +137,12 @@ export default class toCard extends React.Component {
       );
     }
   }
-  renderSevenCol() {
-    if (this.state.fetchingData) {
-      return <div />;
-    } else {
-      let data = this.state.dataJSON.data;
-
-      return (
-        <div className="pro-col-7">
-          <div className="pro-row-3">{this.renderHTML(data)}</div>
-        </div>
-      );
-    }
-  }
+  
   renderFourCol() {
     if (this.state.fetchingData) {
       return <div />;
     } else {
       let data = this.state.dataJSON.data;
-      data.img_url = data.mobile_img_url;
 
       return (
         <div className="pro-col-4">
@@ -160,33 +151,19 @@ export default class toCard extends React.Component {
       );
     }
   }
-  renderTwoCol() {
-    if (this.state.fetchingData) {
-      return <div />;
-    } else {
-      let data = this.state.dataJSON.data;
-
-      return (
-        <div className="pro-col-2">
-          <div className="pro-row-3">{this.renderHTML(data)}</div>
-        </div>
-      );
-    }
-  }
 
   render() {
-    console.log("Cover image mode prop: ", this.props.mode);
-    switch (this.props.mode) {
-      case "col16":
-        return this.renderSixteenCol();
-      case "col7":
-        return this.renderSevenCol();
-      case "col4":
-        return this.renderFourCol();
-      case "col2":
-        return this.renderTwoCol();
-      default:
-        return this.renderHTML(this.state.dataJSON.data);
+    if (this.props.renderingSSR) {
+      return this.renderHTML(this.state.dataJSON.data);
+    } else {
+      switch (this.props.mode) {
+        case "col16":
+          return this.renderSixteenCol();
+        case "col4":
+          return this.renderFourCol();
+        default:
+          return this.renderHTML(this.state.dataJSON.data);
+      }
     }
   }
 }

@@ -48,6 +48,7 @@ ProtoGraph.Card.toCoverImage.prototype.render = function () {
         dataURL={this.options.data_url}
         siteConfigs={this.options.site_configs}
         // dataJSON={this.options.initialState.dataJSON}
+        mode={this.options.mode}
         renderingSSR={true}
       />,
       this.options.selector);
