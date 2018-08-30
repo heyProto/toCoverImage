@@ -132,12 +132,14 @@ export default class toCard extends React.Component {
 
       return (
         <div className="pro-col-16">
-          <div className="pro-row-5">{this.renderHTML(data)}</div>
+          <div className="pro-row-5">
+            <div className='pro-card'>{this.renderHTML(data)}</div>
+            </div>
         </div>
       );
     }
   }
-  
+
   renderFourCol() {
     if (this.state.fetchingData) {
       return <div />;
@@ -146,7 +148,9 @@ export default class toCard extends React.Component {
 
       return (
         <div className="pro-col-4">
-          <div className="pro-row-3">{this.renderHTML(data)}</div>
+          <div className="pro-row-3">
+            <div className='pro-card'>{this.renderHTML(data)}</div>
+            </div>
         </div>
       );
     }

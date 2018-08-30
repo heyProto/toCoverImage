@@ -1,14 +1,13 @@
-.pro-row-3 {
+.pro-row-3 .pro-card{
     position: relative;
     overflow: hidden;
     height: 250px;
 }
 
-.pro-row-5 {
+.pro-row-5 .pro-card {
     position: relative;
     overflow: hidden;
     height: 430px;
-    margin-bottom: 20px;
 }
 
 .pro-col-2 {
