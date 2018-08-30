@@ -118,8 +118,10 @@ export default class toCard extends React.Component {
       return <div />;
     } else {
     return (
-      <div className="image-card">
-        <img src={this.props.mode === "col4" && data.mobile_img_url ? data.mobile_img_url : data.img_url} />
+      <div className='pro-card'>
+        <div className="image-card">
+          <img src={this.props.mode === "col4" && data.mobile_img_url ? data.mobile_img_url : data.img_url} />
+        </div>
       </div>
     );
     }
@@ -133,8 +135,8 @@ export default class toCard extends React.Component {
       return (
         <div className="pro-col-16">
           <div className="pro-row-5">
-            <div className='pro-card'>{this.renderHTML(data)}</div>
-            </div>
+            {this.renderHTML(data)}
+          </div>
         </div>
       );
     }
@@ -149,8 +151,8 @@ export default class toCard extends React.Component {
       return (
         <div className="pro-col-4">
           <div className="pro-row-3">
-            <div className='pro-card'>{this.renderHTML(data)}</div>
-            </div>
+            {this.renderHTML(data)}
+          </div>
         </div>
       );
     }
