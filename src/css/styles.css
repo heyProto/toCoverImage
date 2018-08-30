@@ -13,23 +13,19 @@
 
 .pro-col-2 {
     width: 140px;
-    overflow: hidden;
 }
 
 .pro-col-4 {
     width: 300px;
-    overflow: hidden;
 }
 
 .pro-col-7 {
     width: 540px;
-    overflow: hidden;
 }
 
 .pro-col-16 {
     width: 1260px;
     margin-right: 0px !important;
-    overflow: hidden;
 }
 
 .image-card img{
