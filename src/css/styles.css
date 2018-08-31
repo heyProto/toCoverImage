@@ -37,7 +37,7 @@
 }
 
 @media screen and (max-width: 600px){
-    .pro-row-5 {height: 250px;}
+    .pro-row-5 .pro-card {height: 250px;}
     .pro-col-2 {width: 100%;}
     .pro-col-4 {width: 100%;}
     .pro-col-7 {width: 100%;}
