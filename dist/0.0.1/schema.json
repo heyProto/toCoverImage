@@ -6,6 +6,10 @@
     "data": {
       "id": "/properties/data",
       "properties": {
+        "title":{
+          "type": "string",
+          "title": "Title"
+        },
         "img_url": {
           "id": "/properties/data/properties/image_url",
           "type": "string"
