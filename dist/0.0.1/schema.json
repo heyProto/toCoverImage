@@ -17,6 +17,12 @@
         "mobile_img_url": {
           "id": "/properties/data/properties/mobile_image_url",
           "type": "string"
+        },
+        "link": {
+          "id": "/properties/data/properties/link",
+          "title": "Link",
+          "type": "string",
+          "format": "uri"
         }
       },
       "title": "Card Data",
